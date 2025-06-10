@@ -14,7 +14,7 @@ Violation schema:
     severity: string ['high'/'medium'/'low']
 ]
 */
-export default function ViolationControls({ violation, setViolations }) {
+export default function ViolationDetails({ violation, setViolations }) {
     if (!violation) {
         return <></>;
     }
@@ -22,15 +22,12 @@ export default function ViolationControls({ violation, setViolations }) {
     console.log(violation);
     
     return (<>
+    <h2>Violation Details</h2>
     <div id='violation-details' className='d-grid gap-2 mb-2'>
         <p><strong>ID:</strong> {violation.id}</p>
         <p><strong>Type:</strong> {violation.type}</p>
         <p><strong>Severity:</strong> {violation.severity}</p>
-        <p>{violation.message}</p>
-    </div>
-    <div id='violation-control'>
-        <Button onClick={() => console.log('accept clicked')} variant='success'>Accept</Button>
-        <Button onClick={() => console.log('reject clicked')} variant='danger'>Reject</Button>
+        <p><strong>Violation:</strong> {violation.message}</p>
     </div>
     </>);
 }

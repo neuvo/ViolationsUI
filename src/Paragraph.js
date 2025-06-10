@@ -1,7 +1,5 @@
 export default function Paragraph({text, setText, violation}) {
-    console.log(violation);
-    if (violation !== null) {
-        console.log('violation is not null! yippee!');
+    if (violation) {
         return (
             <p>
                 {text.slice(0, violation.start)}
@@ -12,7 +10,6 @@ export default function Paragraph({text, setText, violation}) {
             </p>
         );
     } else {
-        console.log('violation is null. boo.');
         return text;
     }
 }

@@ -1,4 +1,4 @@
-import ViolationControls from "./ViolationControls.js"
+import ViolationDetails from "./ViolationDetails.js"
 import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function ViolationsMenu({paragraphText, violations, selectViolation}) {
@@ -19,7 +19,7 @@ export default function ViolationsMenu({paragraphText, violations, selectViolati
 
     return (
         <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle variant='info' id='dropdown-basic'>
                 Violations
             </Dropdown.Toggle>
 

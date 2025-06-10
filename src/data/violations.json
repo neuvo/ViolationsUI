@@ -2,8 +2,8 @@
   {
     "id": "v1",
     "text": "guarantees consistent returns of up to 20% annually",
-    "start": 102,
-    "end": 153,
+    "start": 127,
+    "end": 178,
     "length": 51,
     "type": "Guaranteed Returns",
     "message": "Avoid implying guaranteed or predictable returns.",
@@ -12,9 +12,9 @@
   {
     "id": "v2",
     "text": "beat the market and build generational wealth",
-    "start": 180,
-    "end": 226,
-    "length": 46,
+    "start": 231,
+    "end": 276,
+    "length": 45,
     "type": "Promissory Language",
     "message": "Avoid promising outperformance or guaranteed success.",
     "severity": "medium"
@@ -22,9 +22,9 @@
   {
     "id": "v3",
     "text": "make you our next success story",
-    "start": 260,
-    "end": 292,
-    "length": 32,
+    "start": 315,
+    "end": 346,
+    "length": 31,
     "type": "Testimonials",
     "message": "Avoid vague success testimonials without disclosures.",
     "severity": "low"
