@@ -1,4 +1,4 @@
-# complyUI: An interface for resolving compliance violations
+# ViolationsUI: An interface for resolving compliance violations
 
 ## How to run locally
 From root directory:

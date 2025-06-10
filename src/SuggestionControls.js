@@ -1,11 +1,9 @@
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown'
-import { InputGroup } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 
-export default function SuggestionControls({ selectedViolation, selectViolation, violations, setViolations, suggestions, paragraphText, setParagraphText }) {
-    const [selectedSuggestion, selectSuggestion] = useState(null);
+export default function SuggestionControls({ selectedViolation, selectViolation, violations, setViolations, suggestions, selectedSuggestion, selectSuggestion, paragraphText, setParagraphText }) {
     if (!selectedViolation) {
         return <></>;
     }
@@ -29,7 +27,7 @@ export default function SuggestionControls({ selectedViolation, selectViolation,
                 paragraphText.slice(selectedViolation.end);
         setParagraphText(nextParagraphText);
         const textLengthDiff = selectedViolation.length - replacementText.length;
-        setViolations(violations
+        const nextViolations = violations
             .filter(violation => violation.id !== selectedViolation.id)
             .map(violation => {
                 let nextStart = violation.start;
@@ -45,11 +43,11 @@ export default function SuggestionControls({ selectedViolation, selectViolation,
                     start: nextStart,
                     end: nextEnd
                 }
-            })
-        );
+            });
+        setViolations(nextViolations);
 
-        selectViolation(null);
-
+        selectViolation(nextViolations && nextViolations[0]);
+        selectSuggestion(suggestions && nextViolations && nextViolations[0] && suggestions[nextViolations[0].id][0]);
     }
     
     function submitCustomChange(e) {

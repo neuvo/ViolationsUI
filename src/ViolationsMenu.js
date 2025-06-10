@@ -1,9 +1,12 @@
-import ViolationDetails from "./ViolationDetails.js"
 import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function ViolationsMenu({paragraphText, violations, selectViolation}) {
     if (paragraphText === null || violations === null) {
         return <></>
+    }
+
+    if (violations.length === 0) {
+        return <p><h3>All violations have been resolved!</h3></p>
     }
 
     const dropdownItems = violations.map(violation => {
@@ -20,7 +23,7 @@ export default function ViolationsMenu({paragraphText, violations, selectViolati
     return (
         <Dropdown>
             <Dropdown.Toggle variant='info' id='dropdown-basic'>
-                Violations
+                Violations remaining: {violations && violations.length}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
