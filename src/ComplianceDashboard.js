@@ -8,15 +8,6 @@ import rawSuggestions from './data/suggestions.json'
 import { Button, Container } from 'react-bootstrap';
 import SuggestionControls from './SuggestionControls.js';
 
-
-/*
-TODO:
-Add a header that explains the workflow
-Automatically select the first violation that's been loaded
-    Maybe mention that you can navigate with TAB/SHIFT+TAB/ENTER?
-If all violations are resolved, announce this to the user and present them with the final version
-Use banners instead of alerts
-*/
 export default function ComplianceDashboard() {
     const [paragraphText, setParagraphText] = useState('');
     const [violations, setViolations] = useState(null);
