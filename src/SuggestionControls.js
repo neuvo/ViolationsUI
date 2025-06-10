@@ -23,12 +23,12 @@ export default function SuggestionControls({ selectedViolation, selectViolation,
             );
         });
     
-    function acceptSuggestion() {
+    function applyChange(replacementText) {
         const nextParagraphText = paragraphText.slice(0, selectedViolation.start) + 
-            selectedSuggestion +
-            paragraphText.slice(selectedViolation.end);
+                replacementText +
+                paragraphText.slice(selectedViolation.end);
         setParagraphText(nextParagraphText);
-        const textLengthDiff = selectedViolation.length - selectedSuggestion.length;
+        const textLengthDiff = selectedViolation.length - replacementText.length;
         setViolations(violations
             .filter(violation => violation.id !== selectedViolation.id)
             .map(violation => {
@@ -52,12 +52,33 @@ export default function SuggestionControls({ selectedViolation, selectViolation,
 
     }
     
-    function submitChange(e) {
+    function submitCustomChange(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        
-        setViolations(violations.filter(violation => violation.id !== selectedViolation));
-        setParagraphText(nextParagraphText);
+        let customText = '';
+        for (let value of formData.values()) {
+            // form data SHOULD only have one entry
+            customText = value;
+        }
+        applyChange(customText);
+    }
+
+    function submitDismissal(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        let dismissalComment = '';
+        for (let value of formData.values()) {
+            // form data SHOULD only have one entry
+            dismissalComment = value;
+        }
+
+        if (dismissalComment.length === 0) {
+            alert('You must provide a comment to justify your dismissal');
+            return;
+        }
+
+        setViolations(violations.filter(violation => violation.id !== selectedViolation.id));
+        selectViolation(null);
     }
 
     return (<>
@@ -72,32 +93,37 @@ export default function SuggestionControls({ selectedViolation, selectViolation,
     </Dropdown>
     <br />
     <p><strong>Suggested replacement:</strong> <span style={{color:'red'}}>{selectedSuggestion}</span></p>
-    <Button variant='success' onClick={acceptSuggestion}>Accept Suggestion</Button>
+    <Button variant='success' onClick={
+        () => {
+            applyChange(selectedSuggestion)
+        }}>Accept Suggestion</Button>
     <br />
     <br />
     <div id='custom-change'>
-        <InputGroup className='mb-3'>
-            <InputGroup.Text id='custom-form'>Custom</InputGroup.Text>
+        <Form onSubmit={submitCustomChange} className='mb-3'>
+            <Form.Text id='custom-form'>Custom</Form.Text>
             <Form.Control
                 placeholder='Optional: Write a custom change here instead of using a suggested change'
                 aria-label='Optional: Write a custom change here instead of using a suggested change'
                 aria-describedby='custom-form'
-                onSubmit={submitChange}
+                name={'custom-change'}
             />
-        </InputGroup>
-        <Button type='submit' variant='success'>Submit Custom Change</Button>
+            <Button type='submit' variant='success'>Submit Custom Change</Button>
+        </Form>
     </div>
     <br />
     <div id='dismiss-div'>
-        <InputGroup className='mb-3'>
-            <InputGroup.Text id='dismiss-form'>Reject message</InputGroup.Text>
+        <Form onSubmit={submitDismissal} className='mb-3'>
+            <Form.Text id='dismiss-form'>Dismissal Reason</Form.Text>
             <Form.Control
                 placeholder='Explain why you are dismissing the violation'
                 aria-label='Explain why you are dismissing the violation'
                 aria-describedby='reject-form'
+                name={'dismissal-comment'}
             />
-        </InputGroup>
-        <Button onClick={() => console.log('reject clicked')} variant='danger'>Submit Dismissal</Button>
+            <Button type='submit' variant='danger'>Submit Dismissal</Button>
+        </Form>
+        
     </div>
     </>);
 }
